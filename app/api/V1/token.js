@@ -12,7 +12,7 @@ let token;
 router.post('/', async (ctx) => {
     const v = await new TokenValidator().validate(ctx)
     switch (v.get('body.type')) {
-        case LoginType.USER_EMAIL:
+        case LoginType.USER_EMAIL: // 邮箱登录
             token = await emailLogin(v.get('body.account'), v.get('body.secret'))
             break;
         case LoginType.USER_MINI_PROGRAM:
