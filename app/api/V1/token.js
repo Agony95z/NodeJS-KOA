@@ -4,18 +4,21 @@ const {ParameterException} = require('../../../core/http-exception')
 const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
 const {generateToken} = require('../../../core/util')
+const {Auth} = require('../../../middlewares/auth')
 const router = new Router({
     prefix: '/v1/token' // 路由前缀
 })
 let token;
 // 验证登录
-router.post('/', async (ctx) => {
+router.post('/', async (ctx) => { // 登录成功会下发token
     const v = await new TokenValidator().validate(ctx)
     switch (v.get('body.type')) {
         case LoginType.USER_EMAIL: // 邮箱登录
-            token = await emailLogin(v.get('body.account'), v.get('body.secret'))
+            token = await emailLogin(v.get('body.account'), v.get('body.secret')) // body.account指登录的账号，此处是email
             break;
-        case LoginType.USER_MINI_PROGRAM:
+        case LoginType.USER_MINI_PROGRAM: // 小程序登录
+            break;
+        case LoginType.ADMIN_EMAIL:
             break;
         default:
             throw new global.errs.ParameterException('没有相应的处理函数')
@@ -26,6 +29,8 @@ router.post('/', async (ctx) => {
 })
 async function emailLogin(account, secret) {
     const user = await User.vertifyEmailPassword(account, secret)
-    return token = generateToken(user.id, 2)
+    // console.log(user.id)
+    // console.log(Auth.USER)
+    return token = generateToken(user.id, Auth.USER)
 }
 module.exports = router

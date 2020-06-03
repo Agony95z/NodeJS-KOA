@@ -5,12 +5,13 @@ const bookRouter = new Router({
 
 const {HttpException, ParameterException} = require('../../../core/http-exception')
 const {PositiveIntegerValidator} = require('../../validators/validator')
-bookRouter.get('/latest', async (ctx, next) => {
+const {Auth} = require('../../../middlewares/auth') // 验证token是否有效
+bookRouter.get('/latest/:id', new Auth().m, async (ctx, next) => { // new Auth().m用来校验token是否有效
     const path = ctx.params
     const query = ctx.request.query
     const header = ctx.request.header
     const body = ctx.request.body // koa-bodyparser
-    console.log(query)
+    // console.log(query)
     // 使用lin-validator-v2版本，返回的是个promise对象，需要使用await
     const v = await new PositiveIntegerValidator().validate(ctx)
     const id = v.get('path.id', parsed = false) //  parsed = false保留原始数据类型
@@ -29,6 +30,6 @@ bookRouter.get('/latest', async (ctx, next) => {
         // const error = new global.errs.ParameterException()
         throw error
     } */
-    ctx.body = {key: 'hello book'}
+    ctx.body = {key: 'hello book', uid: ctx.auth.uid}
 })
 module.exports = bookRouter

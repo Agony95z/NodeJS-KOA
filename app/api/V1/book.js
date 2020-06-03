@@ -8,7 +8,7 @@ bookRouter.get('/v1/:id/book/latest', async (ctx, next) => {
     const query = ctx.request.query
     const header = ctx.request.header
     const body = ctx.request.body // koa-bodyparser
-    console.log(query)
+    // console.log(query)
     // 使用lin-validator-v2版本，返回的是个promise对象，需要使用await
     const v = await new PositiveIntegerValidator().validate(ctx)
     const id = v.get('path.id', parsed = false) //  parsed = false保留原始数据类型

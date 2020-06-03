@@ -5,7 +5,7 @@ const {sequelize} = require('../../core/db') // sequelize实例
 const {Sequelize, Model} = require('sequelize')
 
 class User extends Model {
-    static async vertifyEmailPassword(email, plainPassword) {
+    static async vertifyEmailPassword(email, plainPassword) { // 通过登录账号和密码去校验SQL
         const user = await User.findOne({
             where: {
                 email
@@ -18,6 +18,7 @@ class User extends Model {
         if (!correct) {
             throw new global.errs.AuthFailed('密码不正确')
         }
+        // console.log(user)
         return user
     }
 }

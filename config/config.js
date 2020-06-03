@@ -9,7 +9,7 @@ module.exports = {
         password: '123456'
     },
     security: {
-        secretKey: 'abcdefg',
-        expiresIn: 60*60
+        secretKey: 'abcdef',
+        expiresIn: 60*60*24*30
     }
 }
