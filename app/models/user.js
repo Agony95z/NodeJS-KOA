@@ -21,6 +21,22 @@ class User extends Model {
         // console.log(user)
         return user
     }
+    static async getUserByOpenid(openid) { // 小程序登录
+        const user = await User.findOne({
+            where: {
+                openid
+            }
+        })
+        return user
+    }
+    static async registerByOpenid(openid) { // 小程序登录
+        const user = await User.create({
+            where: {
+                openid
+            }
+        })
+        return user
+    }
 }
 User.init({
     // 主键：关系型数据库,不能重复， 不能为空

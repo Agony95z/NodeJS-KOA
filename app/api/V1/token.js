@@ -5,6 +5,7 @@ const {LoginType} = require('../../lib/enum')
 const {User} = require('../../models/user')
 const {generateToken} = require('../../../core/util')
 const {Auth} = require('../../../middlewares/auth')
+const {WXManager} = require('../../services/wx')
 const router = new Router({
     prefix: '/v1/token' // 路由前缀
 })
@@ -17,6 +18,7 @@ router.post('/', async (ctx) => { // 登录成功会下发token
             token = await emailLogin(v.get('body.account'), v.get('body.secret')) // body.account指登录的账号，此处是email
             break;
         case LoginType.USER_MINI_PROGRAM: // 小程序登录
+            token = await WXManager.codeToken(v.get('body.account'))
             break;
         case LoginType.ADMIN_EMAIL:
             break;
