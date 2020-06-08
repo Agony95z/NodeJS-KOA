@@ -7,14 +7,16 @@ const {Auth} = require('../../middlewares/auth')
 class WXManager {
     static async codeToken(code) {
         const url = util.format(global.config.wx.loginUrl, global.config.wx.appId, global.config.wx.appSecret, code)
-        console.log(url)
+        // console.log(code)
         const result = await axios.get(url)
+        // console.log(result)
         if (result.status !== 200) {
             throw new global.errs.AuthFailed('openid获取失败')
         }
         const errcode = result.data.errcode
-        if (errcode !== 0) { // 失败
-            throw new global.errs.AuthFailed('openid获取失败' + errcode)
+        const errmsg = result.data.errmsg
+        if (errcode) { // 失败
+            throw new global.errs.AuthFailed('openid获取失败' + errmsg)
         }
         let user = await User.getUserByOpenid(result.data.openid) // 查询SQL是否有该用户，没有就创建
         if (!user) {

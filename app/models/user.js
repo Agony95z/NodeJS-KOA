@@ -31,9 +31,9 @@ class User extends Model {
     }
     static async registerByOpenid(openid) { // 小程序登录
         const user = await User.create({
-            where: {
+            // where: {
                 openid
-            }
+            // }
         })
         return user
     }

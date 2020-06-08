@@ -14,7 +14,7 @@ module.exports = {
     },
     wx: {
         appId: 'wx265140840102654b',
-        appSecret: '169cf2e533cf242b66999b2701e8f0de',
-        loginUrl: `https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code`
+        appSecret: 'da0afd73defd49482233336411a103c7',
+        loginUrl: 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code'
     }
 }
