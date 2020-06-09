@@ -19,7 +19,7 @@ class Auth {
             }
             try {
                 var decode = jwt.verify(userToken.name, global.config.security.secretKey)
-                console.log(decode)
+                // console.log(decode)
             } catch (error) {
                 // token不合法
                 // token过期
