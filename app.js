@@ -10,3 +10,4 @@ InitManager.initCore(app)
 app.listen('3000', () => { 
     console.log('3000接口被监听')
 })
+console.log(123)
